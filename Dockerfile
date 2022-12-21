@@ -9,8 +9,7 @@ RUN pip install --no-cache-dir psycopg2-binary
 run rm /tmp/requirements.txt
 
 COPY slurk /usr/src/slurk
-
-EXPOSE 80
 COPY scripts /usr/src/scripts
 
-# ENTRYPOINT ["gunicorn", "-b", ":80", "-k", "geventwebsocket.gunicorn.workers.GeventWebSocketWorker", "slurk:create_app()"]
+EXPOSE 80
+ENTRYPOINT ["gunicorn", "-b", ":80", "-k", "geventwebsocket.gunicorn.workers.GeventWebSocketWorker", "slurk:create_app()"]

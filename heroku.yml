@@ -1,5 +1,5 @@
 build:
   docker:
     web: Dockerfile
-run:
-  web: /usr/src/scripts/start_server.sh
+# run:
+#   web: /usr/src/scripts/start_server.sh
