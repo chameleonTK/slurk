@@ -77,7 +77,7 @@ def index():
                 db.add(user)
                 db.commit()
                 login_user(user)
-                return redirect(request.args.get("next") or url_for("chat.index"))
+                return redirect(request.args.get("next") or url_for("chat.index", room_id=token.room_id))
             else:
                 flash(
                     "The token is either expired, was already used, or isn't correct at all.",

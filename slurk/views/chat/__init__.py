@@ -12,9 +12,9 @@ def register_blueprints(api):
     api.register_blueprint(chat)
 
 
-@chat.route("/")
+@chat.route("/chat_room/<int:room_id>")
 @login_required
-def index():
+def index(room_id):
     db = current_app.session
 
     if current_user.rooms.count() == 0:

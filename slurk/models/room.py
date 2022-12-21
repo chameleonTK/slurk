@@ -11,6 +11,7 @@ class Room(Common):
 
     layout_id = Column(Integer, ForeignKey("Layout.id"), nullable=False)
     read_only = Column(Boolean, nullable=False)
+    topic = Column(String, nullable=True)
     users = relationship("User", secondary=user_room, back_populates="rooms")
     logs = relationship(
         "Log", backref="room", order_by=asc("date_modified"), passive_deletes=True

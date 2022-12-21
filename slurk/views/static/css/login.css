@@ -82,6 +82,7 @@ input {
   font-size: 14px;
 }
 
+.login-page #create_room,
 .login-page .login-form form input[type=submit] {
   text-transform: uppercase;
   font-size: medium;
@@ -92,6 +93,10 @@ input {
   padding: 15px;
   cursor: pointer;
 }
+
+.login-page #create_room:hover,
+.login-page #create_room:active,
+.login-page #create_room:focus,
 .login-page .login-form form input[type=submit]:hover,
 .login-page .login-form form input[type=submit]:active,
 .login-page .login-form form input[type=submit]:focus {

@@ -32,7 +32,7 @@ $(document).ready(() => {
     let uri = location.protocol + '//' + document.domain + ':' + location.port + "/slurk/api";
     socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
 
-    function apply_layout(layout) {
+    function apply_layout(layout, room) {
         if (!layout)
             return;
         if (layout.html !== "") {
@@ -48,7 +48,7 @@ $(document).ready(() => {
         if (layout.script !== "") {
             window.eval(layout.script);
         }
-        $("#title").text(layout.title);
+        $("#title").text(layout.title+" #"+room.id+" ["+room.topic+"] ");
         $("#subtitle").text(layout.subtitle);
         $('#user-list').fadeTo(null, layout.show_users);
         $('#latency').fadeTo(null, layout.show_latency);
@@ -100,7 +100,7 @@ $(document).ready(() => {
         await update_user_request
 
 	let layout = await layout_request
-        apply_layout(layout);
+        apply_layout(layout, room);
 
 	if (layout.read_only || room.read_only) {
 	    $('#text').prop('readonly', true).prop('placeholder', 'This room is read-only');

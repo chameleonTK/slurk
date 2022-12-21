@@ -39,6 +39,11 @@ class RoomSchema(CommonSchema):
         description="Session for OpenVidu",
         filter_description="Filter for an OpenVidu session",
     )
+    topic = ma.fields.String(
+        required=False,
+        description="Topic",
+        filter_description="Filter for a topic",
+    )
 
 
 @blp.route("/")
@@ -50,10 +55,10 @@ class Rooms(MethodView):
         """List rooms"""
         return RoomSchema().list(args)
 
+    # @blp.login_required
     @blp.etag
     @blp.arguments(RoomSchema.Creation)
     @blp.response(201, RoomSchema.Response)
-    @blp.login_required
     def post(self, item):
         """Add a new room"""
         return RoomSchema().post(item)

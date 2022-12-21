@@ -7,13 +7,84 @@
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}" />
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+
+    <!-- jQuery Modal -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+    <style>
+      .form-select{
+        margin-bottom: 10px;
+        width: 100%;
+        padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+        -moz-padding-start: calc(0.75rem - 3px);
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #212529;
+        background-color: #fff;
+        background-repeat: no-repeat;
+        background-position: right 0.75rem center;
+        background-size: 16px 12px;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+      }
+    </style>
 </head>
 
 <body>
     <div class="login-page">
       <div class="login-form">
         <h1>Slurk</h1>
-        <form method="POST">
+        
+        <select id="topic" class="form-select">
+          <option selected disabled>เลือกหัวข้อสนทนา</option>
+          <option value="การรีไซเคิล">การรีไซเคิล</option>
+          <option value="ชีวิตครอบครัว">ชีวิตครอบครัว</option>
+          <option value="การตรวจสารเสพติด">การตรวจสารเสพติด</option>
+          <option value="สื่อข่าว">สื่อข่าว</option>
+          <option value="ซื้อรถ">ซื้อรถ</option>
+          <option value="โทษประหารชีวิต">โทษประหารชีวิต</option>
+          <option value="การศึกษาสาธารณะ">การศึกษาสาธารณะ</option>
+          <option value="ออกกำลังกายและฟิตเนส">ออกกำลังกายและฟิตเนส</option>
+          <option value="ภาษี">ภาษี</option>
+          <option value="การเงินภายในครอบครัว">การเงินภายในครอบครัว</option>
+          <option value="ดนตรี">ดนตรี</option>
+          <option value="สัตว์เลี้ยง">สัตว์เลี้ยง</option>
+          <option value="อาชญากรรม">อาชญากรรม</option>
+          <option value="การดูแลผู้สูงอายุ">การดูแลผู้สูงอายุ</option>
+          <option value="การควบคุมการใช้ปืน">การควบคุมการใช้ปืน</option>
+          <option value="พิจารณาโดยคณะลูกขุน">พิจารณาโดยคณะลูกขุน</option>
+          <option value="ดูแลเด็ก">ดูแลเด็ก</option>
+          <option value="ภาพยนตร์">ภาพยนตร์</option>
+          <option value="มลพิษทางอากาศ">มลพิษทางอากาศ</option>
+          <option value="การตั้งแคมป์">การตั้งแคมป์</option>
+          <option value="การใช้บัตรเครดิต">การใช้บัตรเครดิต</option>
+          <option value="งานอดิเรกและงานฝีมือ">งานอดิเรกและงานฝีมือ</option>
+          <option value="การทำอาหาร">การทำอาหาร</option>
+          <option value="รายการโทรทัศน์">รายการโทรทัศน์</option>
+          <option value="บทบาทสตรี">บทบาทสตรี</option>
+          <option value="การเลือกวิทยาลัย">การเลือกวิทยาลัย</option>
+          <option value="เสื้อผ้าและเครื่องแต่งกาย">เสื้อผ้าและเครื่องแต่งกาย</option>
+          <option value="สภาพอากาศ">สภาพอากาศ</option>
+          <option value="คอมพิวเตอร์">คอมพิวเตอร์</option>
+          <option value="ร้านอาหาร">ร้านอาหาร</option>
+          <option value="การทำสวน">การทำสวน</option>
+          <option value="บ้าน">บ้าน</option>
+          <option value="การซ่อมรถยนต์">การซ่อมรถยนต์</option>
+          <option value="หนังสือและวรรณคดี">หนังสือและวรรณคดี</option>
+          <option value="สิทธิในความเป็นส่วนตัว">สิทธิในความเป็นส่วนตัว</option>
+          <option value="ฟุตบอล">ฟุตบอล</option>
+          <option value="กิจกรรมรวมญาติ">กิจกรรมรวมญาติ</option>
+
+        </select>
+        <input id="create_room" name="create_room" type="button" value="Create Chatroom">
+
+        
+        <form id="join_room" method="POST" style="display:none">
             <ul class="flash">
                 {% with messages = get_flashed_messages(with_categories=true) %}
                    {% if messages %}
@@ -30,6 +101,90 @@
         </form>
       </div>
     </div>
+
+    <div id="room-info" class="modal">
+      <h2>Room#<span id="rid"></span></h2>
+      <div id="room-link" style="margin-bottom: 20px; background: #eee; padding: 10px;">
+        http://localhost:4000/login/?token=xasxalsxmaslcnlakdcxasxalsxmaslcnlakdcxasxalsxmaslcnlakdcxasxalsxmaslcnlakdc
+      </div>
+    </div>
+
+    <script>
+      $(function(){
+
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        if (!!urlParams.get("token")) {
+          $("#create_room").hide();
+          $("#topic").hide();
+
+          $("#join_room").show();
+          $("#token").val(urlParams.get("token"))
+        }
+
+        function create_room(uri, callback) {
+          let topic = $("#topic").val();
+
+          if (!topic) {
+            alert("กรุณาเลือกหัวข้อสนทนา");
+            return;
+          }
+
+          let data = {"layout_id": 1, "topic": topic}
+          $.ajax({
+              type: "POST",
+              url: uri+"/rooms",
+              contentType: 'application/json',
+              data: JSON.stringify(data),
+              success: callback
+          });
+        }
+
+        function create_token(uri, roomid, callback) {
+          let data = {
+            "room_id": roomid, 
+            "permissions_id": 2,
+            "registrations_left": 10
+          }
+    
+          $.ajax({
+              type: "POST",
+              url: uri+"/tokens",
+              headers: {
+                "Authorization": "Bearer 00000000-0000-0000-0000-000000000000"
+              },
+              contentType: 'application/json',
+              data: JSON.stringify(data),
+              success: callback
+          });
+
+        }
+
+        $("#create_room").click(function(){
+          let uri = location.protocol + '//' + document.domain + ':' + location.port + "/slurk/api";
+          console.log("send!!!")
+
+          create_room(uri, function(resp) {
+            let roomid = resp["id"]
+            create_token(uri, roomid, function(resp) {
+              let token = resp["id"];
+              let roomlink = location.protocol + '//' + document.domain + ':' + location.port + "/login?token="+token;
+              $("#rid").html(roomid);
+              $("#room-link").html(roomlink);
+              $("#room-info").modal();
+            })
+          })
+          
+        })
+      })
+
+      
+//       {
+//     "permissions_id": 2,
+//     "room_id": 1
+// }
+
+    </script>
 </body>
 
 </html>

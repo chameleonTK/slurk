@@ -23,7 +23,7 @@ header, footer {
 
 header{
     position: fixed;
-    height: 80px;
+    height: 92px;
     border-bottom: #E5E7E9;
     box-shadow: rgba(0,0,0,0.10) 0 1px 1px 0,rgba(0,0,0,0.30) 0 4px 4px 0;
     z-index: 5;
@@ -66,7 +66,7 @@ header video {
     position: absolute;
     top: 80px;
     right: 0;
-    width: 55%;
+    width: 25%;
     min-width: 300px;
     max-width: calc(100% - 200px);
     height: 100%;
@@ -90,7 +90,7 @@ header video {
     position: fixed;
     top: 80px;
     left: 0;
-    width: 45%;
+    width: 73%;
     min-width: 200px;
     max-width: calc(100% - 300px);
     height: calc(100% - 80px - 60px);
