@@ -3,6 +3,10 @@
 <html lang="en">
 
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>{{ title }}</title>
 
     <link rel="stylesheet"
@@ -49,6 +53,10 @@
 
     <style>
 
+        #sidebar {
+            display: none !important;
+        }
+
         #content {
             width: calc(100% - 80px);
             height: calc(100% - 100px - 100px);
@@ -57,10 +65,8 @@
             top: 100px;
         }
 
-        @media only screen and (min-width: 700px) {
-            #sidebar {
-                display: none !important;
-            }
+        @media only screen and (max-width: 700px) {
+            
 
             .message {
                 font-size: 40px !important;
