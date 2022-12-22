@@ -47,6 +47,41 @@
         }
     </style>
 
+    <style>
+
+        #content {
+            width: calc(100% - 80px);
+            max-width: 100%;
+            padding: 0px 40px;
+            top: 100px;
+        }
+
+        @media only screen and (min-width: 700px) {
+            #sidebar {
+                display: none !important;
+            }
+
+            .message {
+                font-size: 40px !important;
+            }
+
+            .message-box time,
+            .message-box .user {
+                font-size: 30px !important;
+            }
+
+            .self .message-box, 
+            .command .message-box {
+                padding: 20px 40px;
+            }
+
+            #type-area input#text {
+                font-size: 32px;
+                height: 100px;
+            }
+        }
+    </style>
+
 </head>
 
 <body>
