@@ -15,7 +15,6 @@ html, body {
 
 header, footer {
     padding: 7px;
-    min-width: 600px;
     width: 100%;
     background: #00305E;
     box-sizing: border-box;
@@ -33,7 +32,7 @@ header #title {
     margin: 0 auto 3px;
     color: #E5E5E5;
     text-align: center;
-    font-size: xx-large;
+    font-size: large;
 }
 header #subtitle {
     margin: 0 auto 3px;
@@ -47,8 +46,10 @@ header .latency {
     top: 2px;
     right: 2px;
     color: #818BAC;
+    display:none !important;
 }
 header .users {
+    display:none !important;
     position: absolute;
     top: calc(2px + 1.2em);
     right: 2px;
