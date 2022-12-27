@@ -6,6 +6,7 @@ var session;
 var OV;
 let user_map = {}
 let markdown = new showdown.Converter();
+let room_id = undefined;
 
 function apply_user_permissions(permissions) {
     $('#type-area').fadeTo(null, permissions.send_message || permissions.send_html_message || permissions.send_image || permissions.send_command);
@@ -48,6 +49,8 @@ $(document).ready(() => {
         if (layout.script !== "") {
             window.eval(layout.script);
         }
+
+        room_id = room.id
         $("#title").text(layout.title+" #"+room.id+" ["+room.topic+"] ");
         $("#subtitle").text(layout.subtitle);
         $('#user-list').fadeTo(null, layout.show_users);

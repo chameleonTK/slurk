@@ -2,7 +2,7 @@ from sqlalchemy import String, Integer, ForeignKey, JSON, Column
 from sqlalchemy.orm import relationship
 
 from .common import Common
-
+import hashlib
 
 class Log(Common):
     __tablename__ = "Log"
@@ -14,6 +14,11 @@ class Log(Common):
     data = Column(JSON, nullable=False)
     user = relationship("User", foreign_keys=[user_id])
     receiver = relationship("User", foreign_keys=[receiver_id])
+    log_hash = ""
+
+    def cal_sha(self, idx):
+        s = str(self.room_id)+"_"+str(idx)
+        self.log_hash = hashlib.sha256(s.encode()).hexdigest()
 
     def add(event, user=None, room=None, receiver=None, data=None):
         from flask.globals import current_app

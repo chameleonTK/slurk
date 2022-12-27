@@ -38,6 +38,11 @@ class LogSchema(CommonSchema):
     )
     data = ma.fields.Dict(missing={}, description="Data stored inside this log entry")
 
+    log_hash = ma.fields.String(
+        required=False,
+        description="Unique reference key"
+    )
+
 
 @blp.route("/")
 class Logs(MethodView):
@@ -47,7 +52,12 @@ class Logs(MethodView):
     @blp.login_required
     def get(self, args):
         """List logs"""
-        return LogSchema().list(args)
+        items = LogSchema().list(args)
+
+        for idx, log in enumerate(items):
+            log.cal_sha(idx)
+            
+        return items
 
     @blp.etag
     @blp.arguments(LogSchema.Creation)

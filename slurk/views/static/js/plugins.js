@@ -1,3 +1,18 @@
+function _getlogs(room_id, callback) {
+    let uri = location.protocol + '//' + document.domain + ':' + location.port + "/slurk/api";
+
+    $.ajax({
+        type: "GET",
+        url: uri+"/logs?room_id="+room_id,
+        headers: {
+          "Authorization": "Bearer 00000000-0000-0000-0000-000000000000"
+        },
+        contentType: 'application/json',
+        // data: JSON.stringify(data),
+        success: callback
+    });
+}
+
 function _append(text) {
     $('#chat-area').append(text);
     let content = $('#content');
@@ -119,8 +134,28 @@ function unknown_error(time) {
 function submit_text(text, resolve, reject) {
     socket.emit('text', { room: self_room, message: text }, (success, error) => {
         if (verify_query(success, error)) {
-            if (resolve !== undefined)
+            _getlogs(room_id, function(data) {
+                let message_count = data.map(function(e){ 
+                    if (e.event == "text_message") {
+                        return 1
+                    }
+                    
+                    return 0
+                }).reduce((c, a) => c + a, 0);
+
+                let d = data[data.length-1]
+                if (message_count > 30 && message_count%5==0) {
+                    let s = ""
+                    s += "Room ID: "+ room_id+"\n"
+                    s += "Code:"+d.log_hash.slice(0,10)+"\n"
+                    s += "บันทึกข้อมูลสำเร็จ"
+                    alert(s)
+                }
+            })
+
+            if (resolve !== undefined) {
                 resolve();
+            }
         } else {
             if (reject !== undefined) {
                 reject(error);
